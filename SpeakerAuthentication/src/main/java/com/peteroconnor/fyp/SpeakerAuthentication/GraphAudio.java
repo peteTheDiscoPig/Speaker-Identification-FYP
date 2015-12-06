@@ -36,7 +36,7 @@ public class GraphAudio extends ApplicationFrame{
 
 	        super(title);
 	        this.dataToGraph = dataToGraph;
-	        final TimeSeriesCollection dataset1 = createRandomDataset("Series 1");
+	        final TimeSeriesCollection dataset1 = createRandomDataset("Voice");
 	        final JFreeChart chart = ChartFactory.createTimeSeriesChart(
 	            "Wav", "Time", "Value", dataset1, true, true, false
 	        );

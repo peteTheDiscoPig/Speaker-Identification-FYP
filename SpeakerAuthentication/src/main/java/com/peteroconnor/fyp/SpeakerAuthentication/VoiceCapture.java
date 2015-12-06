@@ -19,6 +19,7 @@ public class VoiceCapture {
 	private File voiceFile = new File(FOLDER_NAME + FILE_NAME);
 	
 	private final long AUDIO_LENGTH = 5000;//how long to record for milliseconds
+	
 	public final float SAMPLE_RATE = 44100;
 	public final int SAMPLE_SIZE_IN_BITS = 16;//depth
 	public final int CHANNELS = 1;//mono = 1, stereo = 2
@@ -36,11 +37,9 @@ public class VoiceCapture {
 	
 	
 	public void capture(){
-		AudioFormat audioFormat = new AudioFormat(SAMPLE_RATE, SAMPLE_SIZE_IN_BITS, CHANNELS, SIGNED, BIG_ENDIAN);
+		AudioFormat audioFormat = new AudioFormat(SAMPLE_RATE,
+				SAMPLE_SIZE_IN_BITS, CHANNELS, SIGNED, BIG_ENDIAN);
 		DataLine.Info info = new DataLine.Info(TargetDataLine.class, audioFormat);
-		if (!AudioSystem.isLineSupported(info)) {
-            System.out.println("Line not supported");
-        }
 		try {
 			line = (TargetDataLine) AudioSystem.getLine(info);
 			line.open(audioFormat);
@@ -51,10 +50,8 @@ public class VoiceCapture {
 			timer.startTimer(AUDIO_LENGTH, line);
 			AudioSystem.write(ais, fileType, voiceFile);
 		} catch (LineUnavailableException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -66,7 +63,7 @@ public class VoiceCapture {
 				folder.mkdirs();
 		    } 
 		    catch(SecurityException se){
-		        //handle it
+		    	System.out.println("Unable to create folder");
 		    }        
 		}
 	}

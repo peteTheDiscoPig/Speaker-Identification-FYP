@@ -17,18 +17,25 @@ public class WavProcessor {
 	
 	public double[] read(String filename) {
 		
-        byte[] data = readByte(filename);
-        data = Arrays.copyOfRange(data, 44, data.length);
+        byte[] dataWithHeader = readByte(filename);
+        byte[] data = removeHeader(dataWithHeader);
         int N = data.length;
         double[] d = new double[N/2];
         for (int i = 0; i < N/2; i++) {
             d[i] = ((short) (((data[2*i+1] & 0xFF) << 8) + (data[2*i] & 0xFF))) / ((double) MAX_16_BIT);
 //            System.out.println(d[i]);
+            
         }
         
         return d;
     }
 	
+	private byte[] removeHeader(byte[] data) {
+		byte[] newData = new byte[data.length - 44];
+		newData = Arrays.copyOfRange(data, 44, data.length);
+		return newData;
+	}
+
 	private static byte[] readByte(String filename) {
         byte[] data = null;
         AudioInputStream ais = null;
