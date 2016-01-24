@@ -10,6 +10,8 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.TargetDataLine;
 
+import com.peteroconnor.fyp.SpeakerAuthentication.Entity.AudioData;
+
 public class VoiceCapture {
 	//ref https://docs.oracle.com/javase/tutorial/sound/capturing.html
 	// ref http://www.codejava.net/coding/capture-and-record-sound-into-wav-file-with-java-sound-api

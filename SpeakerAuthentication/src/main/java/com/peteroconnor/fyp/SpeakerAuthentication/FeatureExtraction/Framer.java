@@ -1,6 +1,8 @@
-package com.peteroconnor.fyp.SpeakerAuthentication;
+package com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction;
 
 import java.util.Arrays;
+
+import com.peteroconnor.fyp.SpeakerAuthentication.Entity.AudioData;
 
 public class Framer {
 	public static final int FRAME_SIZE = 40;

@@ -1,4 +1,4 @@
-package com.peteroconnor.fyp.SpeakerAuthentication;
+package com.peteroconnor.fyp.SpeakerAuthentication.GUI;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;

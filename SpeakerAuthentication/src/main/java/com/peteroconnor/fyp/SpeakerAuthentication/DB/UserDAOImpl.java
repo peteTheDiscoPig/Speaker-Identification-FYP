@@ -1,9 +1,11 @@
-package com.peteroconnor.fyp.SpeakerAuthentication;
+package com.peteroconnor.fyp.SpeakerAuthentication.DB;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
+import com.peteroconnor.fyp.SpeakerAuthentication.GaussianMixtureModel;
+import com.peteroconnor.fyp.SpeakerAuthentication.Entity.User;
 
 public class UserDAOImpl implements IUserDAO{
 

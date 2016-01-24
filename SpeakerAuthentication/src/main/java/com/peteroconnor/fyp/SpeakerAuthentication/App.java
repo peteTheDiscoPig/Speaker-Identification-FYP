@@ -6,6 +6,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
+
+import com.peteroconnor.fyp.SpeakerAuthentication.Entity.AudioData;
+import com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.Framer;
+import com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.MFCC;
+import com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.WavProcessor;
+import com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.Windower;
+import com.peteroconnor.fyp.SpeakerAuthentication.GUI.RegisterWindow;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,27 +28,8 @@ public class App implements ActionListener
 //    	VoiceCapture vc = new VoiceCapture();
 //    	vc.capture();
     	
-    	WavProcessor wavProcessor = new WavProcessor();
-    	AudioData audioData = wavProcessor.bytesToAmplitude(AudioData.VOICE_FILE_LOCATION);
-    	Framer f = new Framer();
-    	double[][] framedSignal = f.frameSignal(audioData);
-    	audioData.setFramedSignal(framedSignal);
-    	audioData.savetoFile();
-    	Windower windower = new Windower();
-    	double[][] newFrames = windower.applyHammingWindow(framedSignal);
-    	
-    	//windowing(framedSignal)
-    	
-//    	GraphAudio g = new GraphAudio("test", framedSignal[100]);
-//    	g.showGraph();
-//    	GraphAudio p = new GraphAudio("test", newFrames[100]);
-//    	p.showGraph();
-    	
-    	
-//    	GraphAudio g = new GraphAudio("test", audioData.getAmplidudes());
-//    	g.showGraph();
-//    	GraphAudio p = new GraphAudio("test", audioData.getPreEmphasisedAmplitudes());
-//    	p.showGraph();
+    	MFCC mfcc = new MFCC();
+    	mfcc.preformFeatureExtraction();
     	
     	
     	EventQueue.invokeLater(new Runnable()

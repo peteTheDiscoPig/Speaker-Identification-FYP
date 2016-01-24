@@ -1,4 +1,6 @@
-package com.peteroconnor.fyp.SpeakerAuthentication;
+package com.peteroconnor.fyp.SpeakerAuthentication.Entity;
+
+import com.peteroconnor.fyp.SpeakerAuthentication.GaussianMixtureModel;
 
 public class User {
 	

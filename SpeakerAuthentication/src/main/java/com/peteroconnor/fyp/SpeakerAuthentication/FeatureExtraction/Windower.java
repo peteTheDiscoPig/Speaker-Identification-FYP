@@ -1,4 +1,4 @@
-package com.peteroconnor.fyp.SpeakerAuthentication;
+package com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction;
 
 public class Windower {
 	//Y(n) = X(n) * W(n)

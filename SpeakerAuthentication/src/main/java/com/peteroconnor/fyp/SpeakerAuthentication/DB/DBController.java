@@ -1,4 +1,4 @@
-package com.peteroconnor.fyp.SpeakerAuthentication;
+package com.peteroconnor.fyp.SpeakerAuthentication.DB;
 
 import java.net.UnknownHostException;
 

@@ -1,4 +1,4 @@
-package com.peteroconnor.fyp.SpeakerAuthentication;
+package com.peteroconnor.fyp.SpeakerAuthentication.Entity;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -20,6 +20,10 @@ public class AudioData {
 		this.bytesWithoutHeader = bytesWithoutHeader;
 		this.amplidudes = amplidudes;
 		lengthInMills = amplidudes.length / SAMPLE_RATE_IN_KHZ;
+	}
+	
+	public AudioData(){
+		
 	}
 	
 	public byte[] getOriginalBytes() {

@@ -1,4 +1,4 @@
-package com.peteroconnor.fyp.SpeakerAuthentication;
+package com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -10,6 +10,8 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
+
+import com.peteroconnor.fyp.SpeakerAuthentication.Entity.AudioData;
 
 public class WavProcessor {
 	//Reference http://algs4.cs.princeton.edu/11model/StdAudio.java

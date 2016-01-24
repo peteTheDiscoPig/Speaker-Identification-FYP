@@ -1,4 +1,4 @@
-package com.peteroconnor.fyp.SpeakerAuthentication;
+package com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction;
 
 public class PreEmphasis {
 	//y(n) = s(n) - as(n - 1)
