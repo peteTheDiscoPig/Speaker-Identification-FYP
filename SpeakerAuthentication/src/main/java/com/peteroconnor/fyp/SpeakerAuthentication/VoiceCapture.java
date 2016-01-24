@@ -14,9 +14,9 @@ public class VoiceCapture {
 	//ref https://docs.oracle.com/javase/tutorial/sound/capturing.html
 	// ref http://www.codejava.net/coding/capture-and-record-sound-into-wav-file-with-java-sound-api
 	private final String FOLDER_NAME = "C:/SpeakerAuthentication/audio";
-	private final String FILE_NAME = "/voice.wav";
+	
 	private File folder = new File(FOLDER_NAME);
-	private File voiceFile = new File(FOLDER_NAME + FILE_NAME);
+	private File voiceFile = new File(AudioData.VOICE_FILE_LOCATION);
 	
 	private final long AUDIO_LENGTH = 5000;//how long to record for milliseconds
 	

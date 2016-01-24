@@ -19,15 +19,28 @@ public class App implements ActionListener
     {
 //    	VoiceCapture vc = new VoiceCapture();
 //    	vc.capture();
-    	//C:/SpeakerAuthentication/audio/voice.wav
     	
-    	WavProcessor w = new WavProcessor();
-    	double[] file = w.read("C:/SpeakerAuthentication/audio/voice.wav");
-    	GraphAudio g = new GraphAudio("test", file);
-    	g.showGraph();
-//    	PreEmphasis pe = new PreEmphasis();
-//    	double[] ped = pe.preemphasise(file);
-//    	w.save("preemp.wav", ped);
+    	WavProcessor wavProcessor = new WavProcessor();
+    	AudioData audioData = wavProcessor.bytesToAmplitude(AudioData.VOICE_FILE_LOCATION);
+    	Framer f = new Framer();
+    	double[][] framedSignal = f.frameSignal(audioData);
+    	audioData.setFramedSignal(framedSignal);
+    	audioData.savetoFile();
+    	Windower windower = new Windower();
+    	double[][] newFrames = windower.applyHammingWindow(framedSignal);
+    	
+    	//windowing(framedSignal)
+    	
+//    	GraphAudio g = new GraphAudio("test", framedSignal[100]);
+//    	g.showGraph();
+//    	GraphAudio p = new GraphAudio("test", newFrames[100]);
+//    	p.showGraph();
+    	
+    	
+//    	GraphAudio g = new GraphAudio("test", audioData.getAmplidudes());
+//    	g.showGraph();
+//    	GraphAudio p = new GraphAudio("test", audioData.getPreEmphasisedAmplitudes());
+//    	p.showGraph();
     	
     	
     	EventQueue.invokeLater(new Runnable()
