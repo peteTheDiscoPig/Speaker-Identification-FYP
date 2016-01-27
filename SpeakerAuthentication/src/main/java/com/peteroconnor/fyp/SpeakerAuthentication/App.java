@@ -27,7 +27,7 @@ public class App implements ActionListener
     {
 //    	VoiceCapture vc = new VoiceCapture();
 //    	vc.capture();
-    	
+//    	
     	MFCC mfcc = new MFCC();
     	mfcc.preformFeatureExtraction();
     	
