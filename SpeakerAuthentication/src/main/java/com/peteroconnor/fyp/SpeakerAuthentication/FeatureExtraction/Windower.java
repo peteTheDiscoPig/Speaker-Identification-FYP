@@ -29,7 +29,7 @@ public class Windower {
 
 	private double applyHammingFunction(int position, int frameLength, double originalValue) {
 		//W(n) = 0.54 – 0.46 cos [2 pi * n / N – 1]
-		double hammingValue = 0.54f - 0.46f * Math.cos((Math.PI * 2 * position)/frameLength - 1);
+		double hammingValue = 0.54f - 0.46f * Math.cos((Math.PI * 2 * position)/frameLength);
 		//Y(n) = X(n) * W(n)
 		double newValue = originalValue * hammingValue;
 		return newValue;
