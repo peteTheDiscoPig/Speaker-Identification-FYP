@@ -12,16 +12,18 @@ import com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.Framer;
 import com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.MFCC;
 import com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.WavProcessor;
 import com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.Windower;
+import com.peteroconnor.fyp.SpeakerAuthentication.GUI.LoginWindow;
 import com.peteroconnor.fyp.SpeakerAuthentication.GUI.RegisterWindow;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Button;
+import javax.swing.JButton;
 
-public class App implements ActionListener
+public class App extends JFrame implements ActionListener
 {
-	private JFrame frame;
+	//private JFrame frame;
 	
     public static void main( String[] args )
     {
@@ -53,35 +55,47 @@ public class App implements ActionListener
     	initialize();
     }
 	private void initialize() {
-		frame = new JFrame();
-		frame.setVisible(true);
-		frame.setBounds(100, 100, 1227, 939);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		//frame = new JFrame();
+		setVisible(true);
+		setBounds(100, 100, 1227, 939);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getContentPane().setLayout(null);
 		
 		JLabel lblAutomaticSpeakerVerification = new JLabel("Automatic Speaker Verification");
 		lblAutomaticSpeakerVerification.setBounds(0, 0, 1205, 37);
 		lblAutomaticSpeakerVerification.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		lblAutomaticSpeakerVerification.setHorizontalAlignment(SwingConstants.CENTER);
-		frame.getContentPane().add(lblAutomaticSpeakerVerification);
+		getContentPane().add(lblAutomaticSpeakerVerification);
 		
-		Button button = new Button("Register");
-		button.addActionListener(this);
+		Button registerButton = new Button("Register");
+		registerButton.addActionListener(this);
 		
-		button.setFont(new Font("Dialog", Font.PLAIN, 30));
-		button.setBounds(458, 274, 200, 50);
-		frame.getContentPane().add(button);
+		registerButton.setFont(new Font("Dialog", Font.PLAIN, 30));
+		registerButton.setBounds(458, 274, 200, 50);
+		getContentPane().add(registerButton);
+		
+		Button loginButton = new Button("Login");
+		loginButton.addActionListener(this);
+		
+		loginButton.setFont(new Font("Dialog", Font.PLAIN, 30));
+		loginButton.setBounds(458, 369, 200, 50);
+		getContentPane().add(loginButton);
+//		frame.setExtendedState( frame.getExtendedState()|JFrame.MAXIMIZED_BOTH );
 	}
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
 		if(action.equals("Register")){
-			RegisterWindow registerWindow = new RegisterWindow();
+			RegisterWindow registerWindow = new RegisterWindow(this);
 			registerWindow.setVisible(true);
-			frame.setVisible(false);
+			setVisible(false);
+		}
+		
+		if(action.equals("Login")){
+			LoginWindow loginWindow = new LoginWindow();
+			loginWindow.setVisible(true);
+			setVisible(false);
 		}
 		
 		
 	}
-	
-	
 }
