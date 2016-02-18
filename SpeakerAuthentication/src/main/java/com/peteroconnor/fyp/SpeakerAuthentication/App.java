@@ -16,9 +16,12 @@ import com.peteroconnor.fyp.SpeakerAuthentication.GUI.LoginWindow;
 import com.peteroconnor.fyp.SpeakerAuthentication.GUI.RegisterWindow;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Button;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class App extends JFrame implements ActionListener
@@ -57,12 +60,13 @@ public class App extends JFrame implements ActionListener
 	private void initialize() {
 		//frame = new JFrame();
 		setVisible(true);
-		setBounds(100, 100, 1227, 939);
+		setSize(700, 700);
+//		setBounds(100, 100, 1227, 939);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 		
 		JLabel lblAutomaticSpeakerVerification = new JLabel("Automatic Speaker Verification");
-		lblAutomaticSpeakerVerification.setBounds(0, 0, 1205, 37);
+		lblAutomaticSpeakerVerification.setBounds(0, 0, 678, 37);
 		lblAutomaticSpeakerVerification.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		lblAutomaticSpeakerVerification.setHorizontalAlignment(SwingConstants.CENTER);
 		getContentPane().add(lblAutomaticSpeakerVerification);
@@ -70,16 +74,22 @@ public class App extends JFrame implements ActionListener
 		Button registerButton = new Button("Register");
 		registerButton.addActionListener(this);
 		
-		registerButton.setFont(new Font("Dialog", Font.PLAIN, 30));
-		registerButton.setBounds(458, 274, 200, 50);
+		registerButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		registerButton.setBounds(290, 444, 100, 30);
 		getContentPane().add(registerButton);
 		
 		Button loginButton = new Button("Login");
 		loginButton.addActionListener(this);
 		
-		loginButton.setFont(new Font("Dialog", Font.PLAIN, 30));
-		loginButton.setBounds(458, 369, 200, 50);
+		loginButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		loginButton.setBounds(290, 506, 100, 30);
 		getContentPane().add(loginButton);
+		
+		JLabel imgLbl = new JLabel("");
+		Image img = new ImageIcon(this.getClass().getResource("/wavImg.png")).getImage();
+		imgLbl.setIcon(new ImageIcon(img));
+		imgLbl.setBounds(31, 43, 609, 340);
+		getContentPane().add(imgLbl);
 //		frame.setExtendedState( frame.getExtendedState()|JFrame.MAXIMIZED_BOTH );
 	}
 	public void actionPerformed(ActionEvent e) {

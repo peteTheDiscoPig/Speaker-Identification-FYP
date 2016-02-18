@@ -5,8 +5,8 @@ import java.util.Arrays;
 import com.peteroconnor.fyp.SpeakerAuthentication.Entity.AudioData;
 
 public class Framer {
-	public static final int FRAME_SIZE = 40;
-	public static final int SHIFT = 20;
+	public static final int FRAME_SIZE = 128;//40;
+	public static final int SHIFT = 64;//20;
 	public static final int COUNT_IN_FRAME = (int) Math.round(AudioData.SAMPLE_RATE_IN_KHZ * FRAME_SIZE);
 	public static final int COUNT_IN_SHIFT = (int) Math.round(AudioData.SAMPLE_RATE_IN_KHZ * SHIFT);
 	

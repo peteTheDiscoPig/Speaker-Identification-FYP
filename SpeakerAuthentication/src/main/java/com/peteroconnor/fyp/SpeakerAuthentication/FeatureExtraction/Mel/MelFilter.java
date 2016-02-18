@@ -1,0 +1,39 @@
+package com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.Mel;
+
+public class MelFilter extends MelConversions{
+	private final double minimumMel;
+	private final double centerMel;
+	private final double maximumMel;
+	private final double vMax;
+
+	public MelFilter(double minimumMel, double centerMel, double maximumMel) {
+		this.minimumMel = minimumMel;
+		this.centerMel = centerMel;
+		this.maximumMel = maximumMel;
+		vMax = 2 / (melToFrequency(maximumMel) - melToFrequency(maximumMel));
+	}
+
+	
+	public double filter(double[] mels, double[] intensities) {
+		double intensity = 0;
+
+		int l = mels.length;
+
+		for (int i = 0; i < l; i++) {
+			double v = mels[i];
+
+			if (v < minimumMel)
+				continue;
+			if (v > maximumMel)
+				break;
+
+			double k = (v <= centerMel) ? (centerMel - v) / (centerMel - minimumMel)
+					: 1 - ((v - centerMel) / (maximumMel - centerMel));
+
+			intensity += intensities[i] * k * vMax;
+		}
+
+		return intensity;
+	}
+
+}

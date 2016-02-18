@@ -18,7 +18,7 @@ public class WavProcessor {
 	private static final double MAX_16_BIT = Short.MAX_VALUE;     // 32,767
 	private static final int HEADER_SIZE = 8500;//80 for just header
 	private static final double NOISE_GATE_VALUE = 0.02;
-	private float sampleRate = 44100;
+	private float sampleRate = 16000;
 	
 	
 	public AudioData bytesToAmplitude(String filename) {

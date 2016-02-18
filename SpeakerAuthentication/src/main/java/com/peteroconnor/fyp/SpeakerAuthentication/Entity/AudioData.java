@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 
 public class AudioData {
-	public static final double SAMPLE_RATE_IN_KHZ = 44.1;
+	public static final double SAMPLE_RATE_IN_KHZ = 16;//44.1;
 	public static final String VOICE_FILE_LOCATION = "C:/SpeakerAuthentication/audio/voice.wav";
 	private byte[] originalBytes;
 	private byte[] bytesWithoutHeader;

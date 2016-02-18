@@ -22,7 +22,7 @@ public class VoiceCapture {
 	
 	private final long AUDIO_LENGTH = 5000;//how long to record for milliseconds
 	
-	public final float SAMPLE_RATE = 44100;
+	public final float SAMPLE_RATE = 16000;//44100;
 	public final int SAMPLE_SIZE_IN_BITS = 16;//depth
 	public final int CHANNELS = 1;//mono = 1, stereo = 2
 	public final boolean SIGNED = true;

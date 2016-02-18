@@ -54,7 +54,7 @@ public class RegisterWindow extends JFrame implements ActionListener {
 	        setSize(700, 700);
 	        getContentPane().setLayout(null);
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	        setTitle("Registration Form in Java");
+	        setTitle("Registration - User Details");
 	        
 	        header = new JLabel("Register");
 	        
@@ -75,7 +75,7 @@ public class RegisterWindow extends JFrame implements ActionListener {
 	        btnClear.addActionListener(this);
 	        btnBack.addActionListener(this);
 	        
-	        header.setBounds(100, 30, 400, 30);
+	        header.setBounds(80, 30, 420, 30);
 	        lblName.setBounds(80, 70, 200, 30);
 	        lblEmail.setBounds(80, 110, 200, 30);
 	        lblPhone.setBounds(80, 156, 200, 30);
