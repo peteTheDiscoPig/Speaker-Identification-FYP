@@ -5,11 +5,9 @@ import com.peteroconnor.fyp.SpeakerAuthentication.GaussianMixtureModel;
 public class User {
 	
 	private Long id;
-	private String firstName;
-	private String lastName;
+	private String name;
 	private String phoneNumber;
 	private String email;
-	private GaussianMixtureModel speakerModel;
 	
 	
 	
@@ -17,53 +15,67 @@ public class User {
 		
 	}
 	
-	public User(String firstName, String lastName, String phoneNumber, String email, GaussianMixtureModel speakerModel){
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.phoneNumber = phoneNumber;
-		this.email = email;
-		this.speakerModel = speakerModel;
+	public User(String name, String phoneNumber, String email){
+		this.setName(name);
+		this.setPhoneNumber(phoneNumber);
+		this.setEmail(email);
 	}
-	
-	
+
+	/**
+	 * @return the id
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getFirstName() {
-		return firstName;
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+
+	/**
+	 * @return the phoneNumber
+	 */
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
+
+	/**
+	 * @param phoneNumber the phoneNumber to set
+	 */
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+
+	/**
+	 * @return the email
+	 */
 	public String getEmail() {
 		return email;
 	}
+
+	/**
+	 * @param email the email to set
+	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public GaussianMixtureModel getSpeakerModel() {
-		return speakerModel;
-	}
-	public void setSpeakerModel(GaussianMixtureModel speakerModel) {
-		this.speakerModel = speakerModel;
-	}
-
 	
-
+	
 }

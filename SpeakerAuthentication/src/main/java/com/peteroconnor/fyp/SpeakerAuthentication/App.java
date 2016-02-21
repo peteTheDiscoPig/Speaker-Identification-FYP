@@ -14,6 +14,7 @@ import com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.WavProcessor
 import com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.Windower;
 import com.peteroconnor.fyp.SpeakerAuthentication.GUI.LoginWindow;
 import com.peteroconnor.fyp.SpeakerAuthentication.GUI.RegisterWindow;
+import com.peteroconnor.fyp.SpeakerAuthentication.PhraseGen.PhraseGen;
 
 import java.awt.Font;
 import java.awt.Image;
@@ -33,9 +34,14 @@ public class App extends JFrame implements ActionListener
 //    	VoiceCapture vc = new VoiceCapture();
 //    	vc.capture();
 //    	
-    	MFCC mfcc = new MFCC();
-    	mfcc.preformFeatureExtraction();
-    	
+//    	MFCC mfcc = new MFCC();
+//    	mfcc.preformFeatureExtraction();
+//    	PhraseGen p = new PhraseGen();
+//    	System.out.println(p.generatePhrase());
+//    	System.out.println(p.generatePhrase());
+//    	System.out.println(p.generatePhrase());
+//    	System.out.println(p.generatePhrase());
+//    	System.out.println(p.generatePhrase());
     	
     	EventQueue.invokeLater(new Runnable()
         {

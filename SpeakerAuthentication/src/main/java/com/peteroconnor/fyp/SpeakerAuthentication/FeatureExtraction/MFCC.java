@@ -28,7 +28,6 @@ public class MFCC {
 //    	GraphAudio g = new GraphAudio("test", absolutes[20]);
 //    	g.showGraph();
 //    	System.out.println(Arrays.toString(absolutes[20]));
-    	System.out.println(absolutes[0].length);
     	MelFilterBank mfb = new MelFilterBank();
     	double[][] filterBankResult =  mfb.getFilterBankResult(absolutes);
     	

@@ -1,5 +1,6 @@
 package com.peteroconnor.fyp.SpeakerAuthentication.DB;
 
+import java.io.IOException;
 import java.net.UnknownHostException;
 
 import com.mongodb.DB;
@@ -16,12 +17,14 @@ public class DBController {
 	private DBCollection dBCollection;
 	
 	public DBController(){
+		startMongoDaemon();
 		hostName = "localhost";
 		port = 27017;
 		dbName = "voiceDB";
 	}
 	
 	public DBController(String hostName, int port, String dbName){
+		startMongoDaemon();
 		this.hostName = hostName;
 		this.port = port;
 		this.dbName = dbName;
@@ -74,6 +77,13 @@ public class DBController {
 		this.dBCollection = dBCollection;
 	}
 	
-	
+	public void startMongoDaemon(){
+		try {
+			Runtime.getRuntime().exec("cmd /c start C:\\mongod.bat");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 }

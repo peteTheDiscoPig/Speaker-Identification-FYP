@@ -9,8 +9,10 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.TargetDataLine;
+import javax.swing.JLabel;
 
 import com.peteroconnor.fyp.SpeakerAuthentication.Entity.AudioData;
+import com.peteroconnor.fyp.SpeakerAuthentication.GUI.RegisterRecord;
 
 public class VoiceCapture {
 	//ref https://docs.oracle.com/javase/tutorial/sound/capturing.html
@@ -27,6 +29,7 @@ public class VoiceCapture {
 	public final int CHANNELS = 1;//mono = 1, stereo = 2
 	public final boolean SIGNED = true;
 	public final boolean BIG_ENDIAN = false;
+	
 	
 	MyTimer timer = new MyTimer();
 	
@@ -49,6 +52,7 @@ public class VoiceCapture {
 			
 			AudioInputStream ais = new AudioInputStream(line);
 			System.out.println("Recording");
+//			registerRecord.getLblRecording().setVisible(true);
 			timer.startTimer(AUDIO_LENGTH, line);
 			AudioSystem.write(ais, fileType, voiceFile);
 		} catch (LineUnavailableException e) {
@@ -56,7 +60,7 @@ public class VoiceCapture {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+//		registerRecord.getLblRecording().setVisible(false);
 	}
 	
 	private void createFolder(){

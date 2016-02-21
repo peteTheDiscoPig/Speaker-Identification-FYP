@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import com.peteroconnor.fyp.SpeakerAuthentication.App;
+import com.peteroconnor.fyp.SpeakerAuthentication.Entity.User;
 
 import edu.cmu.sphinx.linguist.flat.SentenceHMMState.Color;
 
@@ -27,23 +28,27 @@ public class RegisterWindow extends JFrame implements ActionListener {
 	private JTextField txtName, txtEmail, txtPhone;
     private JButton btnContinue, btnClear, btnBack;
     static App app;
+    private JLabel lblNameError;
+    private JLabel lblEmailError;
+    private JLabel lblPhoneError;
+    private JLabel lblError;
     
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RegisterWindow frame = new RegisterWindow(app);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					RegisterWindow frame = new RegisterWindow(app);
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
@@ -97,16 +102,43 @@ public class RegisterWindow extends JFrame implements ActionListener {
 	        getContentPane().add(btnClear);
 	        getContentPane().add(btnBack);
 	        
+	        lblNameError = new JLabel("Invalid Name");
+	        lblNameError.setForeground(java.awt.Color.RED);
+	        lblNameError.setBounds(515, 75, 148, 20);
+	        getContentPane().add(lblNameError);
+	        
+	        lblEmailError = new JLabel("Invalid Email");
+	        lblEmailError.setForeground(java.awt.Color.RED);
+	        lblEmailError.setBounds(515, 115, 148, 20);
+	        getContentPane().add(lblEmailError);
+	        
+	        lblPhoneError = new JLabel("Invalid Phone");
+	        lblPhoneError.setForeground(java.awt.Color.RED);
+	        lblPhoneError.setBounds(515, 161, 148, 20);
+	        getContentPane().add(lblPhoneError);
+	        
+	        lblError = new JLabel("Some of the inputs are invalid. Please fix to continue!!!");
+	        lblError.setForeground(java.awt.Color.RED);
+	        lblError.setBounds(80, 221, 534, 20);
+	        getContentPane().add(lblError);
+	        setErrorsInvisible();
+	        
 	}
 	
 	public void actionPerformed(ActionEvent e) 
     {
        if (e.getSource() == btnContinue)
         {
-           String name = txtName.getText();
-           String email = txtEmail.getText();
-           String phone = txtPhone.getText();
-           
+    	   boolean valid = validateInput();
+           if(valid){
+        	   String name = txtName.getText();
+               String email = txtEmail.getText();
+               String phone = txtPhone.getText();
+               User user = new User(name, email, phone);
+               RegisterRecord regRecord = new RegisterRecord(this, user);
+               regRecord.setVisible(true);
+               setVisible(false);
+           }
        } 
          else if(e.getSource() == btnClear)
       {
@@ -120,6 +152,34 @@ public class RegisterWindow extends JFrame implements ActionListener {
         	 this.dispose();
         	 
          }
-   } 
+   }
+
+	private boolean validateInput() {
+		setErrorsInvisible();
+		boolean noErrors = true;
+		if(txtName.getText().length() < 1){
+			lblNameError.setVisible(true);
+			noErrors = false;
+		}
+		if(txtEmail.getText().length() < 1){
+			lblEmailError.setVisible(true);
+			noErrors = false;
+		}
+		if(txtPhone.getText().length() < 1){
+			lblPhoneError.setVisible(true);
+			noErrors = false;
+		}
+		if(!noErrors){
+			lblError.setVisible(true);
+		}
+		return noErrors;
+	} 
+	
+	private void setErrorsInvisible(){
+		lblNameError.setVisible(false);
+		lblEmailError.setVisible(false);
+		lblPhoneError.setVisible(false);
+		lblError.setVisible(false);
+	}
 
 }

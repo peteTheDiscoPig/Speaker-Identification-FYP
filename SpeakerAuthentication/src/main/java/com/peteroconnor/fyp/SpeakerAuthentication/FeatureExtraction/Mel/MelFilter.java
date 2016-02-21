@@ -6,11 +6,11 @@ public class MelFilter extends MelConversions{
 	private final double maximumMel;
 	private final double vMax;
 
-	public MelFilter(double minimumMel, double centerMel, double maximumMel) {
-		this.minimumMel = minimumMel;
-		this.centerMel = centerMel;
-		this.maximumMel = maximumMel;
-		vMax = 2 / (melToFrequency(maximumMel) - melToFrequency(maximumMel));
+	public MelFilter(double minMel, double centMel, double maxMel) {
+		minimumMel = minMel;
+		centerMel = centMel;
+		maximumMel = maxMel;
+		vMax = 2 / (melToFrequency(maxMel) - melToFrequency(minMel));
 	}
 
 	

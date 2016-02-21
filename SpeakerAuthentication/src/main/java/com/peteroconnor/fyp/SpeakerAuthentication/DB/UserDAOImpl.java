@@ -24,12 +24,10 @@ public class UserDAOImpl implements IUserDAO{
 	public User find(Long id) {
 		BasicDBObject dbObject = new BasicDBObject("id", id);
 		DBObject userObj = collection.findOne(dbObject);
-		String firstName = (String) userObj.get("firstName");
-		String lastName = (String) userObj.get("lastName");
+		String name = (String) userObj.get("name");
 		String phoneNumber = (String) userObj.get("phoneNumber");
 		String email = (String) userObj.get("email");
-		GaussianMixtureModel speakerModel = (GaussianMixtureModel) userObj.get("speakerModel");
-		User user = new User(firstName, lastName, phoneNumber, email, speakerModel);
+		User user = new User(name, phoneNumber, email);
 		return user;
 	}
 
@@ -49,11 +47,9 @@ public class UserDAOImpl implements IUserDAO{
 	
 	private BasicDBObject getUserBasicDBObject(User u){
 		BasicDBObject user = new BasicDBObject("id", u.getId())
-				.append("firstName", u.getFirstName())
-				.append("lastName", u.getLastName())
+				.append("name", u.getName())
 				.append("phoneNumber", u.getPhoneNumber())
-				.append("email", u.getEmail())
-				.append("speakerModel", u.getSpeakerModel());
+				.append("email", u.getEmail());
 		return user;
 	}
 	

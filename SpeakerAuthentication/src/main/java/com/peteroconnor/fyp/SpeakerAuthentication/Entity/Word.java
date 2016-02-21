@@ -1,6 +1,8 @@
 package com.peteroconnor.fyp.SpeakerAuthentication.Entity;
 
 public class Word {
+	public static final int MIN_ID = 1, MAX_ID = 39;
+	
 	
 	public Word(Long id, String singular, String plural){
 		this.id = id;

@@ -2,6 +2,8 @@ package com.peteroconnor.fyp.SpeakerAuthentication;
 
 import javax.sound.sampled.TargetDataLine;
 
+import com.peteroconnor.fyp.SpeakerAuthentication.GUI.RegisterRecord;
+
 public class MyTimer {
 	private long timeInMills;
 	private TargetDataLine line;
@@ -15,6 +17,7 @@ public class MyTimer {
 	Thread voiceInTimer = new Thread(new Runnable() {
 		
 		public void run() {
+			
 			try {
 				Thread.sleep(timeInMills);
 			} catch (Exception e) {

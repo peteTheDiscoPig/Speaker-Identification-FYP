@@ -8,7 +8,6 @@ public abstract class MelConversions {
 	 */
 	public double frequencyToMel(double frequency) {
 		double mel;
-		// mel = 2595 * Math.log10(1+frequency/700);
 		mel = 1127.01048 * Math.log(1 + (frequency / 700));
 		return mel;
 	}
@@ -19,7 +18,6 @@ public abstract class MelConversions {
 	 */
 	public double melToFrequency(double mel) {
 		double frequency;
-		// frequency = 700 * ((Math.pow(10, mel/2595))-1);// not working
 		frequency = 700 * (Math.exp(mel / 1127.01048) - 1);
 		return frequency;
 	}
