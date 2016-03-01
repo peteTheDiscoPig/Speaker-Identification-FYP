@@ -20,6 +20,7 @@ public class MelFilter extends MelConversions{
 		int l = mels.length;
 
 		for (int i = 0; i < l; i++) {
+			
 			double v = mels[i];
 
 			if (v < minimumMel)

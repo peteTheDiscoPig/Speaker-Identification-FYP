@@ -39,6 +39,7 @@ public class FFT{
 	private double getAbsoluteValue(Complex complex){
 		double real = complex.getReal();
 		double imaginary = complex.getImaginary();
+		//should this be squared?
 		double absoluteValue = Math.sqrt((real * real) + (imaginary * imaginary));
 		return absoluteValue;
 	}

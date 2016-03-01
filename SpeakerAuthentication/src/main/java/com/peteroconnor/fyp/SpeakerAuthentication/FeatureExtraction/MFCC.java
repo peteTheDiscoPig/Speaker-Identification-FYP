@@ -22,14 +22,29 @@ public class MFCC {
 //    	audioData.savetoFile();
     	double[][] newFrames = windower.applyHammingWindow(framedSignal);
     	fftLength = newFrames[0].length;
+    	System.out.println(Arrays.toString(newFrames[6]));
     	
     	FFT fft = new FFT();
+    	
     	double[][] absolutes = fft.doFFT(newFrames);
+//    	System.out.println(Arrays.toString(absolutes[6]));
 //    	GraphAudio g = new GraphAudio("test", absolutes[20]);
 //    	g.showGraph();
 //    	System.out.println(Arrays.toString(absolutes[20]));
     	MelFilterBank mfb = new MelFilterBank();
     	double[][] filterBankResult =  mfb.getFilterBankResult(absolutes);
+//    	System.out.println(Arrays.toString(filterBankResult[1]));
+    	
+    	DCT dct = new DCT();
+//    	double[] test = new double[]{256,0,265,0,256,0,256,0,
+//    			256,0,265,0,256,0,256,0,
+//    			256,0,265,0,256,0,256,0,
+//    			256,0,265,0,256,0,256,0,
+//    			256,0,265,0,256,0,256,0,
+//    			256,0,265,0,256,0,256,0,
+//    			256,0,265,0,256,0,256,0,
+//    			256,0,265,0,256,0,256,0};
+//    	System.out.println(Arrays.toString(dct.transform(filterBankResult[1])));
     	
 //    	double[][] intensities = mfb.getIntensitiesInAllFrames();
     	

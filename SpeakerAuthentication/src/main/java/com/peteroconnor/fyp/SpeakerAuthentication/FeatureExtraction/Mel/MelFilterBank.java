@@ -8,7 +8,7 @@ import com.peteroconnor.fyp.SpeakerAuthentication.Entity.AudioData;
 public class MelFilterBank extends MelConversions{
 	private final int minimumFrequency = 300; //could be 20 - lower end of hearing
 	private final int maximumFrequency = 8000;
-	private final int numberOfFilters = 40; //can be 26 to 40
+	private final int numberOfFilters = 33; //can be 26 to 40
 	private final double minimumMel;
 	private final double maximumMel;
 	private final double hopNumber;
@@ -63,7 +63,7 @@ public class MelFilterBank extends MelConversions{
 		for (int i = 0; i < filterLength; i++) {
 			out[i] = filterBanks[i].filter(mel, spectrum);
 		}
-		System.out.println(Arrays.toString(out));
+//		System.out.println(Arrays.toString(out));
 		return out;
 	}
 
