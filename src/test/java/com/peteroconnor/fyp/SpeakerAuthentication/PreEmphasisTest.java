@@ -13,8 +13,8 @@ public class PreEmphasisTest {
 		PreEmphasis pe = new PreEmphasis();
 		double[] data = new double[]{1,2,3,4,5,6,7,8,9};
 		double[] actuals = pe.preemphasise(data);
-		//double[] expecteds = new double[]{0.0, 1.05, 1.1, 1.1500000000000004, 1.2000000000000002, 1.25, 1.3000000000000007, 1.3500000000000005, 1.4000000000000004};
-		double[] expecteds = new double[]{1,2,3,4,5,6,7,8,9};
+		double[] expecteds = new double[]{0.0, 1.05, 1.1, 1.15, 1.2, 1.25, 1.3, 1.35, 1.4};
+		
 		//fail("Not yet implemented");
 		for(int i = 0; i < actuals.length; i++){
 			assertEquals(actuals[i], expecteds[i], DELTA);
