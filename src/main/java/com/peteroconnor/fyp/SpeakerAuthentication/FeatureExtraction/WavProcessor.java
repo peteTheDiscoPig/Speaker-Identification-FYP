@@ -38,6 +38,7 @@ public class WavProcessor {
         return audioData;
     }
 	
+	
 	private double[] zeroAlignment(double[] amplitudes) {
 		boolean isZero = true;
 		int countZeros = 0;

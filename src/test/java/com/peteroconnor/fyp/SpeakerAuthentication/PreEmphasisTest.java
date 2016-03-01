@@ -19,8 +19,6 @@ public class PreEmphasisTest {
 		for(int i = 0; i < actuals.length; i++){
 			assertEquals(actuals[i], expecteds[i], DELTA);
 		}
-		
-		
 	}
 
 }
