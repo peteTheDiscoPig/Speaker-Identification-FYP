@@ -6,8 +6,6 @@ import java.io.InputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
-import edu.cmu.sphinx.tools.audio.AudioDataInputStream;
-import edu.cmu.sphinx.tools.audio.AudioPlayer;
 
 public class Playback {
 	public final String SOUND_FILENAME = "C:/SpeakerAuthentication/audio/voice.wav";

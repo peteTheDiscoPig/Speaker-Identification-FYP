@@ -19,7 +19,6 @@ import javax.swing.border.EmptyBorder;
 import com.peteroconnor.fyp.SpeakerAuthentication.App;
 import com.peteroconnor.fyp.SpeakerAuthentication.Entity.User;
 
-import edu.cmu.sphinx.linguist.flat.SentenceHMMState.Color;
 
 public class RegisterWindow extends JFrame implements ActionListener {
 
