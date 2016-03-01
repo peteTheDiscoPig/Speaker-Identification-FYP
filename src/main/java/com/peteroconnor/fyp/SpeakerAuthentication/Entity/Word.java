@@ -4,26 +4,26 @@ public class Word {
 	public static final int MIN_ID = 1, MAX_ID = 39;
 	
 	
-	public Word(Long id, String singular, String plural){
+	public Word(long id, String singular, String plural){
 		this.id = id;
 		this.singular = singular;
 		this.plural = plural;
 	}
 
-	private Long id;
+	private long id;
 	private String singular;
 	private String plural;
 	
 	/**
 	 * @return the id
 	 */
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	

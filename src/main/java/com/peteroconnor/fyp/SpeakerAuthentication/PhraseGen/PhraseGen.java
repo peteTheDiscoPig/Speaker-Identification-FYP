@@ -31,7 +31,8 @@ public class PhraseGen {
 
 	private Word getWord() {
 		Random rand = new Random();
-		Long id = (long) (rand.nextInt(Word.MAX_ID - Word.MIN_ID + 1) + Word.MIN_ID);
+		//changed first Long to long for jenkins
+		long id = (long) (rand.nextInt(Word.MAX_ID - Word.MIN_ID + 1) + Word.MIN_ID);
 		Word word = wordDaoI.find(id);
 		return word;
 	}
