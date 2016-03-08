@@ -95,8 +95,8 @@ public class App extends JFrame implements ActionListener
 		getContentPane().add(loginButton);
 		
 		JLabel imgLbl = new JLabel("");
-		Image img = new ImageIcon(this.getClass().getResource("/wavImg.png")).getImage();
-		imgLbl.setIcon(new ImageIcon(img));
+//		Image img = new ImageIcon(this.getClass().getResource("/wavImg.png")).getImage();
+//		imgLbl.setIcon(new ImageIcon(img));
 		imgLbl.setBounds(31, 43, 609, 340);
 		getContentPane().add(imgLbl);
 //		frame.setExtendedState( frame.getExtendedState()|JFrame.MAXIMIZED_BOTH );
