@@ -22,7 +22,7 @@ public class MFCC {
 //    	audioData.savetoFile();
     	double[][] newFrames = windower.applyHammingWindow(framedSignal);
     	fftLength = newFrames[0].length;
-    	System.out.println(Arrays.toString(newFrames[6]));
+//    	System.out.println(Arrays.toString(newFrames[6]));
     	
     	FFT fft = new FFT();
     	
@@ -35,15 +35,21 @@ public class MFCC {
     	double[][] filterBankResult =  mfb.getFilterBankResult(absolutes);
 //    	System.out.println(Arrays.toString(filterBankResult[1]));
     	
+    	LogEnergy logEnergy = new LogEnergy();
+    	double[][] loggedEnergies = logEnergy.logFrames(filterBankResult);
+    	
     	DCT dct = new DCT();
-//    	double[] test = new double[]{256,0,265,0,256,0,256,0,
-//    			256,0,265,0,256,0,256,0,
-//    			256,0,265,0,256,0,256,0,
-//    			256,0,265,0,256,0,256,0,
-//    			256,0,265,0,256,0,256,0,
-//    			256,0,265,0,256,0,256,0,
-//    			256,0,265,0,256,0,256,0,
-//    			256,0,265,0,256,0,256,0};
+    	
+    	double[][] cepstralCoefficents = dct.transformFrames(loggedEnergies);
+    	
+    	System.out.println(Arrays.toString(cepstralCoefficents[0]));
+    	System.out.println(Arrays.toString(cepstralCoefficents[2]));
+    	System.out.println(Arrays.toString(cepstralCoefficents[3]));
+    	System.out.println(Arrays.toString(cepstralCoefficents[4]));
+//    	GraphAudio g = new GraphAudio("test", cepstralCoefficents[6]);
+//    	g.showGraph();
+    	
+
 //    	System.out.println(Arrays.toString(dct.transform(filterBankResult[1])));
     	
 //    	double[][] intensities = mfb.getIntensitiesInAllFrames();

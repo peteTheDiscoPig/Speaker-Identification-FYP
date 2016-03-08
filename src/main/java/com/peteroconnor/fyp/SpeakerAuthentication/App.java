@@ -37,8 +37,8 @@ public class App extends JFrame implements ActionListener
 //    	vc.capture();
     	
     	
-    	MFCC mfcc = new MFCC();
-    	mfcc.preformFeatureExtraction();
+//    	MFCC mfcc = new MFCC();
+//    	mfcc.preformFeatureExtraction();
 //    	PhraseGen p = new PhraseGen();
 //    	System.out.println(p.generatePhrase());
 //    	System.out.println(p.generatePhrase());

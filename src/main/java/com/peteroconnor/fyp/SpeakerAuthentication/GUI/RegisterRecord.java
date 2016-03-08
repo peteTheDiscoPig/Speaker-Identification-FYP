@@ -3,16 +3,20 @@ package com.peteroconnor.fyp.SpeakerAuthentication.GUI;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JFrame;
 
 import com.peteroconnor.fyp.SpeakerAuthentication.Playback;
 import com.peteroconnor.fyp.SpeakerAuthentication.VoiceCapture;
+import com.peteroconnor.fyp.SpeakerAuthentication.Entity.AudioData;
 import com.peteroconnor.fyp.SpeakerAuthentication.Entity.User;
 import com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.MFCC;
+import com.peteroconnor.fyp.SpeakerAuthentication.speechRecognition.SpeechRecognition;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.Color;
@@ -21,14 +25,16 @@ public class RegisterRecord extends JFrame implements ActionListener{
 
 //	private JFrame frmRegistrationVoice;
 	private JButton btnRecord, btnPlayback, btnBack, btnContinue;
-	private JLabel lblRecording;
-	public JLabel lblFinished;
 	static RegisterWindow rw;
 	private User user;
 	private VoiceCapture vc;
 	private boolean isRecording = false;
 	private Playback playback;
 	private MFCC mfcc;
+	private String prompt = "the quick brown fox jumped over the lazy dog";
+	private File file;
+	private SpeechRecognition speechRecognition;
+	private JLabel lblPhraseMatch;
 	
 
 	/**
@@ -68,6 +74,9 @@ public class RegisterRecord extends JFrame implements ActionListener{
 		getContentPane().setLayout(null);
 		playback = new Playback();
 		mfcc = new MFCC();
+		
+		file = new File(AudioData.VOICE_FILE_LOCATION);
+		speechRecognition = new SpeechRecognition();
 		
 		btnRecord = new JButton("Record");
 		btnRecord.setBounds(80, 218, 100, 30);
@@ -109,28 +118,27 @@ public class RegisterRecord extends JFrame implements ActionListener{
 		lblPhoneVal.setBounds(295, 156, 200, 30);
 		getContentPane().add(lblPhoneVal);
 		
-		setLblRecording(new JLabel("Recording"));
-		getLblRecording().setForeground(new Color(0, 128, 0));
-		getLblRecording().setFont(new Font("Tahoma", Font.PLAIN, 22));
-		getLblRecording().setBounds(45, 348, 123, 30);
-		getContentPane().add(getLblRecording());
-		getLblRecording().setVisible(false);
-		
-		
-		
-		lblFinished = new JLabel("Finished");
-		lblFinished.setForeground(new Color(255, 0, 0));
-		lblFinished.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		lblFinished.setBounds(45, 288, 123, 30);
-		getContentPane().add(lblFinished);
-		
 		btnContinue = new JButton("Continue");
 		btnContinue.setBounds(461, 219, 100, 30);
 		getContentPane().add(btnContinue);
 		btnContinue.addActionListener(this);
 		btnContinue.setEnabled(false);
 		
-		lblFinished.setVisible(false);
+		JLabel lblPrompt = new JLabel(prompt);
+		lblPrompt.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblPrompt.setBounds(80, 349, 481, 30);
+		getContentPane().add(lblPrompt);
+		
+		JLabel lblPromptHeader = new JLabel("Please say the following:");
+		lblPromptHeader.setBounds(80, 313, 200, 20);
+		getContentPane().add(lblPromptHeader);
+		
+		lblPhraseMatch = new JLabel("Phrase Match");
+		lblPhraseMatch.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblPhraseMatch.setForeground(new Color(46, 139, 87));
+		lblPhraseMatch.setBounds(80, 395, 145, 30);
+		getContentPane().add(lblPhraseMatch);
+		lblPhraseMatch.setVisible(false);
 		
 		
 		
@@ -143,14 +151,11 @@ public class RegisterRecord extends JFrame implements ActionListener{
        	 dispose();
         }
 		else if(e.getSource() == btnRecord){
-			
-			
-			vc = new VoiceCapture();
-//			setRecording(true);
-			
+			btnContinue.setEnabled(false);
+	    	btnPlayback.setEnabled(false);
+			vc = new VoiceCapture();//don't move this
 	    	vc.capture();
-	    	setRecording(false);
-	    	btnContinue.setEnabled(true);
+	    	checkSpokenPhrase();
 		}
 		else if(e.getSource() == btnPlayback){
 			playback.playVoice();
@@ -161,34 +166,20 @@ public class RegisterRecord extends JFrame implements ActionListener{
 		
 	}
 
-	/**
-	 * @return the lblRecording
-	 */
-	public JLabel getLblRecording() {
-		return lblRecording;
-	}
-
-	/**
-	 * @param lblRecording the lblRecording to set
-	 */
-	public void setLblRecording(JLabel lblRecording) {
-		this.lblRecording = lblRecording;
-	}
-
-	public void setRecording(boolean recording) {
-		if(recording){
-			lblRecording.setVisible(true);
-			lblFinished.setVisible(false);
-			
+	private void checkSpokenPhrase() {
+		speechRecognition.transcriptUsingHTTP(file);
+		if(speechRecognition.isPhraseMatch(prompt)){
+			btnContinue.setEnabled(true);
+	    	btnPlayback.setEnabled(true);
+	    	lblPhraseMatch.setVisible(true);
 		}
 		else{
-			lblRecording.setVisible(false);
-			lblFinished.setVisible(true);
-			btnPlayback.setEnabled(true);
-			btnRecord.setText("Re-record");
+			String whatWasSaid = speechRecognition.getSpokenPhrase();
+			String message = "You did not say the correct phrase. You said:\n" + whatWasSaid + "\nPlease re-record to continue";
+			JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
-		
 	}
+
 	
 }

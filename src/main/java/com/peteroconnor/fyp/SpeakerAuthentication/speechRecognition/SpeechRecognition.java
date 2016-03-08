@@ -41,7 +41,7 @@ public class SpeechRecognition {
 
         transcript = service.recognize(params);
         
-        System.out.println("transcript: " + transcript.toString());
+//        System.out.println("transcript: " + transcript.toString());
         
         service.deleteSession(session);
 
@@ -59,7 +59,7 @@ public class SpeechRecognition {
 	}
 	
 	public boolean isPhraseMatch(String prompt){
-		
+		getSpokenPhrase();
 		return spokenPhrase.equals(prompt);
 	}
 	
