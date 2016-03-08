@@ -2,5 +2,5 @@
 applications:
 - name: Speaker-Identification-FYP-Jenkins
   memory: 512M
-  host: http://speaker-identification-fyp-jenkins.cfapps.io/
+  host: http://speaker-identification-fyp-jenkins
   path: target/SpeakerAuthentication-0.0.1-SNAPSHOT.jar
