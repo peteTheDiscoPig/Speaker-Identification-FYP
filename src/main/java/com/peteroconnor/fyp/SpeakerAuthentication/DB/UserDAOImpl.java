@@ -27,7 +27,9 @@ public class UserDAOImpl implements IUserDAO{
 		String name = (String) userObj.get("name");
 		String phoneNumber = (String) userObj.get("phoneNumber");
 		String email = (String) userObj.get("email");
+		double[][] mfcc = (double[][]) userObj.get("mfcc");
 		User user = new User(name, phoneNumber, email);
+		user.setMFCCs(mfcc);
 		return user;
 	}
 
@@ -49,7 +51,8 @@ public class UserDAOImpl implements IUserDAO{
 		BasicDBObject user = new BasicDBObject("id", u.getId())
 				.append("name", u.getName())
 				.append("phoneNumber", u.getPhoneNumber())
-				.append("email", u.getEmail());
+				.append("email", u.getEmail())
+				.append("mfcc", u.getMFCCs());
 		return user;
 	}
 	

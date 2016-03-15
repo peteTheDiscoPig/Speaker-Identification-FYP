@@ -15,7 +15,7 @@ public class MFCC {
 	Windower windower = new Windower();
 	private int fftLength;
 	
-	public void preformFeatureExtraction(){
+	public double[][] preformFeatureExtraction(){
 		audioData = wavProcessor.bytesToAmplitude(AudioData.VOICE_FILE_LOCATION);
     	double[][] framedSignal = f.frameSignal(audioData);
     	audioData.setFramedSignal(framedSignal);
@@ -46,6 +46,8 @@ public class MFCC {
     	System.out.println(Arrays.toString(cepstralCoefficents[2]));
     	System.out.println(Arrays.toString(cepstralCoefficents[3]));
     	System.out.println(Arrays.toString(cepstralCoefficents[4]));
+    	
+    	return cepstralCoefficents;
 //    	GraphAudio g = new GraphAudio("test", cepstralCoefficents[6]);
 //    	g.showGraph();
     	

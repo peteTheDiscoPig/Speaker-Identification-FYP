@@ -17,14 +17,14 @@ public class DBController {
 	private DBCollection dBCollection;
 	
 	public DBController(){
-		startMongoDaemon();
+//		startMongoDaemon();
 		hostName = "localhost";
 		port = 27017;
 		dbName = "voiceDB";
 	}
 	
 	public DBController(String hostName, int port, String dbName){
-		startMongoDaemon();
+//		startMongoDaemon();
 		this.hostName = hostName;
 		this.port = port;
 		this.dbName = dbName;

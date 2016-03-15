@@ -7,8 +7,11 @@ import java.io.File;
 
 import javax.swing.JFrame;
 
+import com.peteroconnor.fyp.SpeakerAuthentication.App;
 import com.peteroconnor.fyp.SpeakerAuthentication.Playback;
 import com.peteroconnor.fyp.SpeakerAuthentication.VoiceCapture;
+import com.peteroconnor.fyp.SpeakerAuthentication.DB.DBController;
+import com.peteroconnor.fyp.SpeakerAuthentication.DB.UserDAOImpl;
 import com.peteroconnor.fyp.SpeakerAuthentication.Entity.AudioData;
 import com.peteroconnor.fyp.SpeakerAuthentication.Entity.User;
 import com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.MFCC;
@@ -26,6 +29,7 @@ public class RegisterRecord extends JFrame implements ActionListener{
 //	private JFrame frmRegistrationVoice;
 	private JButton btnRecord, btnPlayback, btnBack, btnContinue;
 	static RegisterWindow rw;
+	static App app;
 	private User user;
 	private VoiceCapture vc;
 	private boolean isRecording = false;
@@ -56,7 +60,8 @@ public class RegisterRecord extends JFrame implements ActionListener{
 	/**
 	 * Create the application.
 	 */
-	public RegisterRecord(RegisterWindow rw, User user) {
+	public RegisterRecord(App app, RegisterWindow rw, User user) {
+		this.app = app;
 		this.rw = rw;
 		this.user = user;
 		initialize();
@@ -161,8 +166,21 @@ public class RegisterRecord extends JFrame implements ActionListener{
 			playback.playVoice();
 		}
 		else if(e.getSource() == btnContinue){
-			mfcc.preformFeatureExtraction();
+			double[][] mfccs = mfcc.preformFeatureExtraction();
+			user.setMFCCs(mfccs);
+			saveUser();
+			app.setVisible(true);
+			this.dispose();
+			rw.dispose();
 		}
+		
+	}
+
+	private void saveUser() {
+		DBController dbcontroller = new DBController();
+		dbcontroller.connect();
+		UserDAOImpl userDAOImpl = new UserDAOImpl(dbcontroller.getDatabase());
+		userDAOImpl.save(user);
 		
 	}
 

@@ -134,7 +134,7 @@ public class RegisterWindow extends JFrame implements ActionListener {
                String email = txtEmail.getText();
                String phone = txtPhone.getText();
                User user = new User(name, phone, email);
-               RegisterRecord regRecord = new RegisterRecord(this, user);
+               RegisterRecord regRecord = new RegisterRecord(app, this, user);
                regRecord.setVisible(true);
                setVisible(false);
            }

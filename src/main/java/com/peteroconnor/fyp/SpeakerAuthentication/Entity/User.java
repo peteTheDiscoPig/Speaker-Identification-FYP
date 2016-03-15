@@ -8,6 +8,7 @@ public class User {
 	private String name;
 	private String phoneNumber;
 	private String email;
+	private double[][] MFCCs;
 	
 	
 	
@@ -75,6 +76,20 @@ public class User {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	/**
+	 * @return the mFCCs
+	 */
+	public double[][] getMFCCs() {
+		return MFCCs;
+	}
+
+	/**
+	 * @param mFCCs the mFCCs to set
+	 */
+	public void setMFCCs(double[][] mFCCs) {
+		MFCCs = mFCCs;
 	}
 	
 	

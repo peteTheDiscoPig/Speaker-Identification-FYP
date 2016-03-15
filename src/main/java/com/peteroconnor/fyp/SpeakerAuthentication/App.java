@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 
+import com.peteroconnor.fyp.SpeakerAuthentication.DB.DBController;
 import com.peteroconnor.fyp.SpeakerAuthentication.Entity.AudioData;
 import com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.Framer;
 import com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.MFCC;
@@ -31,8 +32,11 @@ public class App extends JFrame implements ActionListener
 {
 	//private JFrame frame;
 	
+	
     public static void main( String[] args )
     {
+    	DBController dbController = new DBController();
+    	dbController.startMongoDaemon();
 //    	VoiceCapture vc = new VoiceCapture();
 //    	vc.capture();
     	
