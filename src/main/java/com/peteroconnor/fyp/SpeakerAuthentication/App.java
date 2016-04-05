@@ -114,7 +114,7 @@ public class App extends JFrame implements ActionListener
 		}
 		
 		if(action.equals("Login")){
-			LoginWindow loginWindow = new LoginWindow();
+			LoginWindow loginWindow = new LoginWindow(this);
 			loginWindow.setVisible(true);
 			setVisible(false);
 		}

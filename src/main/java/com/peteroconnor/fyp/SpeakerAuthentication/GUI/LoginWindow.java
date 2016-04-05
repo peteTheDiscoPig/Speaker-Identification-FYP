@@ -7,12 +7,26 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.peteroconnor.fyp.SpeakerAuthentication.App;
+import com.peteroconnor.fyp.SpeakerAuthentication.GaussianMixtureModel;
+import com.peteroconnor.fyp.SpeakerAuthentication.Playback;
+import com.peteroconnor.fyp.SpeakerAuthentication.VoiceCapture;
+import com.peteroconnor.fyp.SpeakerAuthentication.DB.DBController;
+import com.peteroconnor.fyp.SpeakerAuthentication.DB.UserDAOImpl;
+import com.peteroconnor.fyp.SpeakerAuthentication.Entity.AudioData;
+import com.peteroconnor.fyp.SpeakerAuthentication.Entity.User;
+import com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.MFCC;
 import com.peteroconnor.fyp.SpeakerAuthentication.PhraseGen.PhraseGen;
+import com.peteroconnor.fyp.SpeakerAuthentication.speechRecognition.SpeechRecognition;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JTextArea;
@@ -22,19 +36,33 @@ public class LoginWindow extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JLabel lblPrompt;
 	private JButton btnNewPhrase;
+	private JButton btnRecord, btnPlayback, btnBack, btnContinue;
 	private PhraseGen phraseGen;
-	private String phrase = "If you see this uncomment generatePhrase()";
+	private String phrase = "the quick brown fox jumped over the lazy dog";//"If you see this uncomment generatePhrase()";
 	private final String htmlTag1 = "<html><p style='width: 500px'>";
 	private final String htmlTag2 = "</p></html>";
-
+	private Playback playback;
+	private MFCC mfcc;
+	private File file;
+	private SpeechRecognition speechRecognition;
+	static App app;
+	private VoiceCapture vc;
 
 	/**
 	 * Create the frame.
 	 */
-	public LoginWindow() {
+	public LoginWindow(App app) {
+		this.app = app;
 		setTitle("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(700, 700);
+
+		playback = new Playback();
+		mfcc = new MFCC();
+
+		file = new File(AudioData.VOICE_FILE_LOCATION);
+		speechRecognition = new SpeechRecognition();
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
@@ -45,8 +73,8 @@ public class LoginWindow extends JFrame implements ActionListener {
 		contentPane.add(lblPromptHead);
 
 		// dissable when editing LoginWindow GUI
-		phraseGen = new PhraseGen();
-		phrase = phraseGen.generatePhrase();
+//		phraseGen = new PhraseGen();
+//		phrase = phraseGen.generatePhrase();
 
 		lblPrompt = new JLabel(htmlTag1 + phrase + htmlTag2);
 		lblPrompt.setFont(new Font("Tahoma", Font.PLAIN, 22));
@@ -56,15 +84,91 @@ public class LoginWindow extends JFrame implements ActionListener {
 		btnNewPhrase = new JButton("New Phrase");
 		btnNewPhrase.setBounds(70, 194, 115, 29);
 		contentPane.add(btnNewPhrase);
+
+		btnRecord = new JButton("Record");
+		btnRecord.setBounds(71, 337, 100, 30);
+		contentPane.add(btnRecord);
+
+		btnBack = new JButton("Back");
+		btnBack.setBounds(198, 337, 100, 30);
+		contentPane.add(btnBack);
+
+		btnPlayback = new JButton("Playback");
+		btnPlayback.setEnabled(false);
+		btnPlayback.setBounds(327, 337, 100, 30);
+		contentPane.add(btnPlayback);
+
+		btnContinue = new JButton("Continue");
+		btnContinue.setEnabled(false);
+		btnContinue.setBounds(452, 338, 100, 30);
+		contentPane.add(btnContinue);
+		
 		btnNewPhrase.addActionListener(this);
+		btnRecord.addActionListener(this);
+		btnBack.addActionListener(this);
+		btnPlayback.addActionListener(this);
+		btnContinue.addActionListener(this);
 
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == btnNewPhrase){
+		if (e.getSource() == btnNewPhrase) {
 			phrase = phraseGen.generatePhrase();
 			lblPrompt.setText(htmlTag1 + phrase + htmlTag2);
+		} else if (e.getSource() == btnBack) {
+			app.setVisible(true);
+			setVisible(false);
+			dispose();
+		}
+		else if(e.getSource() == btnRecord){
+			btnContinue.setEnabled(false);
+	    	btnPlayback.setEnabled(false);
+			vc = new VoiceCapture();//don't move this
+	    	vc.capture();
+	    	checkSpokenPhrase();
+		}
+		else if(e.getSource() == btnPlayback){
+			playback.playVoice();
+		}
+		else if(e.getSource() == btnContinue){
+			double[][] mfccs = mfcc.preformFeatureExtraction();
+			
+			//get users from database, gmm for each mfcc, compare gmm to mfccs generated
+			DBController dbcontroller = new DBController();
+			dbcontroller.connect();
+			UserDAOImpl userDAOImpl = new UserDAOImpl(dbcontroller.getDatabase());
+			User user1 = userDAOImpl.find((long) 1);
+			User user2 = userDAOImpl.find((long) 2);
+			
+			GaussianMixtureModel gmm1 = new GaussianMixtureModel(user1.getMFCCs());
+			GaussianMixtureModel gmm2 = new GaussianMixtureModel(user2.getMFCCs());
+			
+			System.out.println("User 1: "+ Arrays.toString(gmm1.compare(mfccs)));
+			
+			System.out.println("User 2: "+ Arrays.toString(gmm2.compare(mfccs)));
+			
+			
+//			GaussianMixtureModel gmm = new GaussianMixtureModel(mfccs);
+//			System.out.println("User 1: "+ Arrays.toString(gmm.compare(user1.getMFCCs())));
+//			
+//			System.out.println("User 2: "+ Arrays.toString(gmm.compare(user2.getMFCCs())));
 		}
 
+	}
+	
+	
+	private void checkSpokenPhrase() {
+		speechRecognition.transcriptUsingHTTP(file);
+		if(speechRecognition.isPhraseMatch(phrase)){
+			btnContinue.setEnabled(true);
+	    	btnPlayback.setEnabled(true);
+//	    	lblPhraseMatch.setVisible(true);
+		}
+		else{
+			String whatWasSaid = speechRecognition.getSpokenPhrase();
+			String message = "You did not say the correct phrase. You said:\n" + whatWasSaid + "\nPlease re-record to continue";
+			JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		
 	}
 }

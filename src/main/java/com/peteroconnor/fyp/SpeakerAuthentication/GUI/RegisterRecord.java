@@ -168,6 +168,7 @@ public class RegisterRecord extends JFrame implements ActionListener{
 		else if(e.getSource() == btnContinue){
 			double[][] mfccs = mfcc.preformFeatureExtraction();
 			user.setMFCCs(mfccs);
+			//uncomment to save
 			saveUser();
 			app.setVisible(true);
 			this.dispose();
