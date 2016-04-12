@@ -1,6 +1,6 @@
 package com.peteroconnor.fyp.SpeakerAuthentication.Entity;
 
-import com.peteroconnor.fyp.SpeakerAuthentication.GaussianMixtureModel;
+import com.peteroconnor.fyp.SpeakerAuthentication.GMM.GaussianMixtureModel;
 
 public class User {
 	
@@ -9,7 +9,7 @@ public class User {
 	private String phoneNumber;
 	private String email;
 	private double[][] MFCCs;
-	
+	private double likeihood;
 	
 	
 	public User(){
@@ -90,6 +90,20 @@ public class User {
 	 */
 	public void setMFCCs(double[][] mFCCs) {
 		MFCCs = mFCCs;
+	}
+
+	/**
+	 * @return the likeihood
+	 */
+	public double getLikeihood() {
+		return likeihood;
+	}
+
+	/**
+	 * @param likeihood the likeihood to set
+	 */
+	public void setLikeihood(double likeihood) {
+		this.likeihood = likeihood;
 	}
 	
 	

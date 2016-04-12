@@ -6,9 +6,9 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import com.peteroconnor.fyp.SpeakerAuthentication.GaussianMixtureModel;
 import com.peteroconnor.fyp.SpeakerAuthentication.Entity.User;
 import com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.DCT;
+import com.peteroconnor.fyp.SpeakerAuthentication.GMM.GaussianMixtureModel;
 
 public class UserDAOImpl implements IUserDAO {
 
@@ -29,29 +29,47 @@ public class UserDAOImpl implements IUserDAO {
 	public User find(Long id) {
 		BasicDBObject dbObject = new BasicDBObject("id", id);
 		DBObject userObj = collection.findOne(dbObject);
-		String name = (String) userObj.get("name");
-		String phoneNumber = (String) userObj.get("phoneNumber");
-		String email = (String) userObj.get("email");
-		//double[][] mfcc = (double[][]) userObj.get("mfcc");
-		
-		
-		BasicDBList list = (BasicDBList) userObj.get("mfcc");
-		int listSize = list.size();
-		double[][] mfcc = new double[listSize][DCT.NUMBER_OF_MFCC];
-		for(int i = 0; i < list.size(); i++){
-			BasicDBList subList = (BasicDBList) list.get(i);
-			Object[] objArr = subList.toArray();
-			
-			//double d = (double) objArr[0];
-			int objArrSize = objArr.length;
-			for(int j = 0; j < objArr.length; j++){
-				mfcc[i][j] = (double) objArr[j];
-			}
+//		String name = (String) userObj.get("name");
+//		String phoneNumber = (String) userObj.get("phoneNumber");
+//		String email = (String) userObj.get("email");
+//		//double[][] mfcc = (double[][]) userObj.get("mfcc");
+//		
+//		
+//		BasicDBList list = (BasicDBList) userObj.get("mfcc");
+//		int listSize = list.size();
+//		double[][] mfcc = new double[listSize][DCT.NUMBER_OF_MFCC];
+//		for(int i = 0; i < list.size(); i++){
+//			BasicDBList subList = (BasicDBList) list.get(i);
+//			Object[] objArr = subList.toArray();
+//			
+//			//double d = (double) objArr[0];
+//			int objArrSize = objArr.length;
+//			for(int j = 0; j < objArr.length; j++){
+//				mfcc[i][j] = (double) objArr[j];
+//			}
+//		}
+//		
+//		User user = new User(name, phoneNumber, email);
+//		user.setMFCCs(mfcc);
+		User user = dbObjectToUser(userObj);
+		return user;
+	}
+	
+	public User[] findAll(){
+		DBObject[] userObjects = new DBObject[Math.toIntExact(getMaxId())];
+		DBCursor cursor = collection.find();
+		int i = 0;
+		while(cursor.hasNext()){
+			DBObject user = cursor.next();
+			userObjects[i] = user;
+			i++;
+		}
+		User[] users = new User[userObjects.length];
+		for (int j = 0; j < users.length; j++){
+			users[j] = dbObjectToUser(userObjects[j]);
 		}
 		
-		User user = new User(name, phoneNumber, email);
-		user.setMFCCs(mfcc);
-		return user;
+		return users;
 	}
 
 	public void update(User u) {
@@ -90,5 +108,31 @@ public class UserDAOImpl implements IUserDAO {
 		}
 		
 		return maximum;
+	}
+	
+	private User dbObjectToUser(DBObject userObj){
+		String name = (String) userObj.get("name");
+		String phoneNumber = (String) userObj.get("phoneNumber");
+		String email = (String) userObj.get("email");
+		//double[][] mfcc = (double[][]) userObj.get("mfcc");
+		
+		
+		BasicDBList list = (BasicDBList) userObj.get("mfcc");
+		int listSize = list.size();
+		double[][] mfcc = new double[listSize][DCT.NUMBER_OF_MFCC];
+		for(int i = 0; i < list.size(); i++){
+			BasicDBList subList = (BasicDBList) list.get(i);
+			Object[] objArr = subList.toArray();
+			
+			//double d = (double) objArr[0];
+			int objArrSize = objArr.length;
+			for(int j = 0; j < objArr.length; j++){
+				mfcc[i][j] = (double) objArr[j];
+			}
+		}
+		
+		User user = new User(name, phoneNumber, email);
+		user.setMFCCs(mfcc);
+		return user;
 	}
 }

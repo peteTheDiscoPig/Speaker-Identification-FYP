@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 import org.apache.commons.math3.complex.Complex;
 
-import com.peteroconnor.fyp.SpeakerAuthentication.GaussianMixtureModel;
 import com.peteroconnor.fyp.SpeakerAuthentication.Entity.AudioData;
 import com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.Mel.MelFilterBank;
+import com.peteroconnor.fyp.SpeakerAuthentication.GMM.GaussianMixtureModel;
 import com.peteroconnor.fyp.SpeakerAuthentication.GUI.GraphAudio;
 
 public class MFCC {
@@ -43,10 +43,10 @@ public class MFCC {
     	
     	double[][] cepstralCoefficents = dct.transformFrames(loggedEnergies);
     	
-    	System.out.println(Arrays.toString(cepstralCoefficents[0]));
-    	System.out.println(Arrays.toString(cepstralCoefficents[2]));
-    	System.out.println(Arrays.toString(cepstralCoefficents[3]));
-    	System.out.println(Arrays.toString(cepstralCoefficents[4]));
+//    	System.out.println(Arrays.toString(cepstralCoefficents[0]));
+//    	System.out.println(Arrays.toString(cepstralCoefficents[2]));
+//    	System.out.println(Arrays.toString(cepstralCoefficents[3]));
+//    	System.out.println(Arrays.toString(cepstralCoefficents[4]));
     	
 //    	GaussianMixtureModel gmm = new GaussianMixtureModel(cepstralCoefficents);
     	

@@ -30,8 +30,8 @@ public class WavProcessor {
         for (int i = 0; i < N/2; i++) {
         	amplitudes[i] = ((short) (((data[2*i+1] & 0xFF) << 8) + (data[2*i] & 0xFF))) / ((double) MAX_16_BIT);
         }
-        amplitudes = applyNoiseGate(amplitudes);
-        amplitudes = zeroAlignment(amplitudes);
+//        amplitudes = applyNoiseGate(amplitudes);
+//        amplitudes = zeroAlignment(amplitudes);
         
         AudioData audioData = new AudioData(dataWithHeader, data, amplitudes);
         preEmphasise(audioData);

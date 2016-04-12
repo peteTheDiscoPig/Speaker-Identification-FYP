@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.peteroconnor.fyp.SpeakerAuthentication.App;
-import com.peteroconnor.fyp.SpeakerAuthentication.GaussianMixtureModel;
 import com.peteroconnor.fyp.SpeakerAuthentication.Playback;
 import com.peteroconnor.fyp.SpeakerAuthentication.VoiceCapture;
 import com.peteroconnor.fyp.SpeakerAuthentication.DB.DBController;
@@ -16,6 +15,8 @@ import com.peteroconnor.fyp.SpeakerAuthentication.DB.UserDAOImpl;
 import com.peteroconnor.fyp.SpeakerAuthentication.Entity.AudioData;
 import com.peteroconnor.fyp.SpeakerAuthentication.Entity.User;
 import com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.MFCC;
+import com.peteroconnor.fyp.SpeakerAuthentication.GMM.GaussianMixtureModel;
+import com.peteroconnor.fyp.SpeakerAuthentication.GMM.Identifer;
 import com.peteroconnor.fyp.SpeakerAuthentication.PhraseGen.PhraseGen;
 import com.peteroconnor.fyp.SpeakerAuthentication.speechRecognition.SpeechRecognition;
 
@@ -27,6 +28,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Arrays;
+import java.util.stream.DoubleStream;
 
 import javax.swing.JButton;
 import javax.swing.JTextArea;
@@ -133,25 +135,39 @@ public class LoginWindow extends JFrame implements ActionListener {
 		else if(e.getSource() == btnContinue){
 			double[][] mfccs = mfcc.preformFeatureExtraction();
 			
-			//get users from database, gmm for each mfcc, compare gmm to mfccs generated
-			DBController dbcontroller = new DBController();
-			dbcontroller.connect();
-			UserDAOImpl userDAOImpl = new UserDAOImpl(dbcontroller.getDatabase());
-			User user1 = userDAOImpl.find((long) 1);
-			User user2 = userDAOImpl.find((long) 2);
+			Identifer identifer = new Identifer(mfccs);
 			
-			GaussianMixtureModel gmm1 = new GaussianMixtureModel(user1.getMFCCs());
-			GaussianMixtureModel gmm2 = new GaussianMixtureModel(user2.getMFCCs());
-			
-			System.out.println("User 1: "+ Arrays.toString(gmm1.compare(mfccs)));
-			
-			System.out.println("User 2: "+ Arrays.toString(gmm2.compare(mfccs)));
+			User bestMatch = identifer.getBestMatch();
+			System.out.println("Best match: " + bestMatch.getName());
 			
 			
-//			GaussianMixtureModel gmm = new GaussianMixtureModel(mfccs);
-//			System.out.println("User 1: "+ Arrays.toString(gmm.compare(user1.getMFCCs())));
+////	    	GraphAudio g = new GraphAudio("test", mfccs[20]);
+////	    	g.showGraph();
 //			
-//			System.out.println("User 2: "+ Arrays.toString(gmm.compare(user2.getMFCCs())));
+//			//get users from database, gmm for each mfcc, compare gmm to mfccs generated
+//			DBController dbcontroller = new DBController();
+//			dbcontroller.connect();
+//			UserDAOImpl userDAOImpl = new UserDAOImpl(dbcontroller.getDatabase());
+//			User user1 = userDAOImpl.find((long) 1);
+//			User user2 = userDAOImpl.find((long) 5);
+//			
+//			GaussianMixtureModel gmm1 = new GaussianMixtureModel(user1.getMFCCs());
+//			GaussianMixtureModel gmm2 = new GaussianMixtureModel(user2.getMFCCs());
+//			
+//			double[] user1Array = gmm1.compare(mfccs);
+//			double[] user2Array = gmm2.compare(mfccs);
+//			
+//			System.out.println("User 1: "+ Arrays.toString(user1Array));
+//			System.out.println("User 2: "+ Arrays.toString(user2Array));
+//			
+//			System.out.println("user 1 sum: " + DoubleStream.of(user1Array).sum());
+//			System.out.println("user 2 sum: " + DoubleStream.of(user2Array).sum());
+//			
+//			
+////			GaussianMixtureModel gmm = new GaussianMixtureModel(mfccs);
+////			System.out.println("User 1: "+ Arrays.toString(gmm.compare(user1.getMFCCs())));
+////			
+////			System.out.println("User 2: "+ Arrays.toString(gmm.compare(user2.getMFCCs())));
 		}
 
 	}
