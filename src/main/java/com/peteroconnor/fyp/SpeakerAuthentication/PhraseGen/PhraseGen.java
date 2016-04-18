@@ -35,6 +35,12 @@ public class PhraseGen {
 //		
 //		return phrase.getPhrase();
 	}
+	
+	public String getPhrase(Long id){
+		Phrase phrase = phraseDAOImpl.find(id);
+		return phrase.getPhrase();
+		
+	}
 
 	private Word getWord() {
 		Random rand = new Random();

@@ -8,12 +8,16 @@ public class Metric {
 	private double likeihood;
 	private boolean phraseSameAsRegister;
 	private boolean result;
+	private String expectedName;
+	private String phraseNo;
 
-	public Metric(String name, double likeihood, String phrase, boolean result) {
+	public Metric(String name, double likeihood, String phrase, boolean result, String expectedName, String phraseNo) {
 		this.setName(name);
 		this.setLikeihood(likeihood);
 		this.setResult(result);
 		this.setPhraseSameAsRegister(phrase == RegisterRecord.prompt ? true : false);
+		this.expectedName = expectedName;
+		this.phraseNo = phraseNo;
 	}
 
 	/**
@@ -70,6 +74,34 @@ public class Metric {
 	 */
 	public void setResult(boolean result) {
 		this.result = result;
+	}
+
+	/**
+	 * @return the expectedName
+	 */
+	public String getExpectedName() {
+		return expectedName;
+	}
+
+	/**
+	 * @param expectedName the expectedName to set
+	 */
+	public void setExpectedName(String expectedName) {
+		this.expectedName = expectedName;
+	}
+
+	/**
+	 * @return the phraseNo
+	 */
+	public String getPhraseNo() {
+		return phraseNo;
+	}
+
+	/**
+	 * @param phraseNo the phraseNo to set
+	 */
+	public void setPhraseNo(String phraseNo) {
+		this.phraseNo = phraseNo;
 	}
 
 	

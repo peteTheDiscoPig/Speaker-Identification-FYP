@@ -67,9 +67,9 @@ public class RegisterWindow extends JFrame implements ActionListener {
 	        lblName = new JLabel("Name:");
 	        lblEmail = new JLabel("Email:");
 	        lblPhone = new JLabel("Phone No:"); 
-	        txtName = new JTextField();
-	        txtEmail = new JTextField();
-	        txtPhone = new JTextField();
+	        txtName = new JTextField("person_");
+	        txtEmail = new JTextField("N/A");
+	        txtPhone = new JTextField("N/A");
 	 
 	        btnContinue = new JButton("Continue");
 	        btnClear = new JButton("Clear");

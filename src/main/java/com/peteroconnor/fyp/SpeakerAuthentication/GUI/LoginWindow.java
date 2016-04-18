@@ -20,6 +20,7 @@ import com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.MFCC;
 import com.peteroconnor.fyp.SpeakerAuthentication.GMM.GaussianMixtureModel;
 import com.peteroconnor.fyp.SpeakerAuthentication.GMM.Identifer;
 import com.peteroconnor.fyp.SpeakerAuthentication.PhraseGen.PhraseGen;
+import com.peteroconnor.fyp.SpeakerAuthentication.metrics.WavSaver;
 import com.peteroconnor.fyp.SpeakerAuthentication.speechRecognition.SpeechRecognition;
 
 import javax.swing.JLabel;
@@ -34,6 +35,7 @@ import java.util.stream.DoubleStream;
 
 import javax.swing.JButton;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class LoginWindow extends JFrame implements ActionListener {
 
@@ -54,6 +56,12 @@ public class LoginWindow extends JFrame implements ActionListener {
 	private User bestMatch;
 	private JButton btnIncorrect, btnCorrect;
 	private JLabel lblMetrics;
+	private Long phraseNumber = 1l;
+	private String phraseWord = "phrase_", phraseIdentifier = phraseWord + phraseNumber;
+	private JLabel lblPhraseNo;
+	private JLabel lblPersonName;
+	private JTextField txtPersonName;
+	
 
 	/**
 	 * Create the frame.
@@ -78,10 +86,16 @@ public class LoginWindow extends JFrame implements ActionListener {
 		JLabel lblPromptHead = new JLabel("Please say the following:");
 		lblPromptHead.setBounds(71, 52, 200, 20);
 		contentPane.add(lblPromptHead);
+		
+		lblPhraseNo = new JLabel("PhraseNo");
+		lblPhraseNo.setBounds(396, 52, 69, 20);
+		contentPane.add(lblPhraseNo);
 
 		// dissable when editing LoginWindow GUI
 		phraseGen = new PhraseGen();
-		phrase = phraseGen.generatePhrase();
+//		phrase = phraseGen.generatePhrase();
+		phrase = phraseGen.getPhrase(phraseNumber);
+		setPhraseNo();
 
 		lblPrompt = new JLabel(htmlTag1 + phrase + htmlTag2);
 		lblPrompt.setFont(new Font("Tahoma", Font.PLAIN, 22));
@@ -122,6 +136,17 @@ public class LoginWindow extends JFrame implements ActionListener {
 		lblMetrics.setBounds(161, 551, 69, 20);
 		contentPane.add(lblMetrics);
 		
+		lblPersonName = new JLabel("Person Name");
+		lblPersonName.setBounds(71, 261, 100, 20);
+		contentPane.add(lblPersonName);
+		
+		txtPersonName = new JTextField("person_");
+		txtPersonName.setBounds(201, 258, 253, 26);
+		contentPane.add(txtPersonName);
+		txtPersonName.setColumns(10);
+		
+		
+		
 		btnNewPhrase.addActionListener(this);
 		btnRecord.addActionListener(this);
 		btnBack.addActionListener(this);
@@ -132,9 +157,16 @@ public class LoginWindow extends JFrame implements ActionListener {
 
 	}
 
+	private void setPhraseNo() {
+		// TODO Auto-generated method stub
+		lblPhraseNo.setText(phraseWord+phraseNumber);
+		
+	}
+
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnNewPhrase) {
-			phrase = phraseGen.generatePhrase();
+//			phrase = phraseGen.generatePhrase();
+			phrase = getNextPhrase();
 			lblPrompt.setText(htmlTag1 + phrase + htmlTag2);
 		} else if (e.getSource() == btnBack) {
 			app.setVisible(true);
@@ -198,8 +230,18 @@ public class LoginWindow extends JFrame implements ActionListener {
 	}
 	
 	
+	private String getNextPhrase() {
+		phraseNumber++;
+		if(phraseNumber == 11l){
+			phraseNumber = 1l;
+		}
+		setPhraseNo();
+		String phrase = phraseGen.getPhrase(phraseNumber);
+		return phrase;
+	}
+
 	private void generateMetric(boolean result) {
-		Metric metric = new Metric(bestMatch.getName(), bestMatch.getLikeihood(), phrase, result);
+		Metric metric = new Metric(bestMatch.getName(), bestMatch.getLikeihood(), phrase, result, txtPersonName.getText(), lblPhraseNo.getText());
 		saveMetric(metric);
 	}
 
@@ -209,6 +251,13 @@ public class LoginWindow extends JFrame implements ActionListener {
 		MetricDAOImpl metricDAOImpl = new MetricDAOImpl(dbcontroller.getDatabase());
 		metricDAOImpl.save(metric);
 		System.out.println("metric saved");
+		saveWavForTests();
+	}
+
+	private void saveWavForTests() {
+		WavSaver wavSaver = new WavSaver();
+		wavSaver.renameAndSaveWavToNewLocation(txtPersonName.getText(), lblPhraseNo.getText());
+		
 	}
 
 	private void checkSpokenPhrase() {

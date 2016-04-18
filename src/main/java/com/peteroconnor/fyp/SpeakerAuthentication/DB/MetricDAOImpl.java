@@ -21,9 +21,11 @@ public class MetricDAOImpl implements IMetricDOA{
 
 	private BasicDBObject getMetricDBObject(Metric m) {
 		BasicDBObject metric = new BasicDBObject("name",m.getName())
+				.append("expectedName", m.getExpectedName())
 				.append("likeihood", m.getLikeihood())
 				.append("phraseSameAsRegister", m.isPhraseSameAsRegister())
-				.append("result", m.isResult());
+				.append("result", m.isResult())
+				.append("phraseNumber", m.getPhraseNo());
 		return metric;
 	}
 	

@@ -17,7 +17,7 @@ public class PreEmphasisTest {
 		
 		//fail("Not yet implemented");
 		for(int i = 0; i < actuals.length; i++){
-			assertEquals(actuals[i], expecteds[i], DELTA);
+			assertEquals(actuals[i], expecteds[i]);
 		}
 	}
 
