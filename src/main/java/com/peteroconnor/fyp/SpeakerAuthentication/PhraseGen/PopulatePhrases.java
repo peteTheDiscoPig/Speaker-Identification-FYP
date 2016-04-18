@@ -7,34 +7,36 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
 import com.peteroconnor.fyp.SpeakerAuthentication.DB.DBController;
-import com.peteroconnor.fyp.SpeakerAuthentication.DB.WordDAOImpl;
-import com.peteroconnor.fyp.SpeakerAuthentication.Entity.Word;
+import com.peteroconnor.fyp.SpeakerAuthentication.DB.PhraseDAOImpl;
+import com.peteroconnor.fyp.SpeakerAuthentication.Entity.Phrase;
 
-public class PopulateWords {
+public class PopulatePhrases {
 
 	public static void main(String[] args) {
 		DBController dbcontroller = new DBController();
 		dbcontroller.connect();
 		
-		WordDAOImpl w = new WordDAOImpl(dbcontroller.getDatabase());
-		
+		PhraseDAOImpl phraseDAOImpl = new PhraseDAOImpl(dbcontroller.getDatabase());
+
 		String line;
-		int id =0;
+		int id = 0;
+		
 		try{
-			InputStream inStream = new FileInputStream("src/words.txt");
+			InputStream inStream = new FileInputStream("src/phrases.txt");
 		    InputStreamReader inStreamReader = new InputStreamReader(inStream, Charset.forName("UTF-8"));
 		    BufferedReader bufferedReader = new BufferedReader(inStreamReader);
 		    
-		    while ((line = bufferedReader.readLine()) != null) {
+		    while ((line = bufferedReader.readLine()) != null){
 		    	id++;
-		        String[] words = line.split(" ");
-		        Word word = new Word((long) id, words[0], words[1]);
-		        w.save(word);
+		    	com.peteroconnor.fyp.SpeakerAuthentication.Entity.Phrase phrase;
+		    	phrase = new Phrase((long) id, line);
+		    	phraseDAOImpl.save(phrase);
 		    }
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
+		
 	}
 
 }

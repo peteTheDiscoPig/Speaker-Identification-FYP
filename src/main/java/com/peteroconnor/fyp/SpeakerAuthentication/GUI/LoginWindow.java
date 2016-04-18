@@ -11,8 +11,10 @@ import com.peteroconnor.fyp.SpeakerAuthentication.App;
 import com.peteroconnor.fyp.SpeakerAuthentication.Playback;
 import com.peteroconnor.fyp.SpeakerAuthentication.VoiceCapture;
 import com.peteroconnor.fyp.SpeakerAuthentication.DB.DBController;
+import com.peteroconnor.fyp.SpeakerAuthentication.DB.MetricDAOImpl;
 import com.peteroconnor.fyp.SpeakerAuthentication.DB.UserDAOImpl;
 import com.peteroconnor.fyp.SpeakerAuthentication.Entity.AudioData;
+import com.peteroconnor.fyp.SpeakerAuthentication.Entity.Metric;
 import com.peteroconnor.fyp.SpeakerAuthentication.Entity.User;
 import com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.MFCC;
 import com.peteroconnor.fyp.SpeakerAuthentication.GMM.GaussianMixtureModel;
@@ -40,7 +42,7 @@ public class LoginWindow extends JFrame implements ActionListener {
 	private JButton btnNewPhrase;
 	private JButton btnRecord, btnPlayback, btnBack, btnContinue;
 	private PhraseGen phraseGen;
-	private String phrase = "the quick brown fox jumped over the lazy dog";//"If you see this uncomment generatePhrase()";
+	private String phrase = "don't count your chickens before the eggs have hatched";//"the quick brown fox jumped over the lazy dog";//"If you see this uncomment generatePhrase()";
 	private final String htmlTag1 = "<html><p style='width: 500px'>";
 	private final String htmlTag2 = "</p></html>";
 	private Playback playback;
@@ -49,6 +51,9 @@ public class LoginWindow extends JFrame implements ActionListener {
 	private SpeechRecognition speechRecognition;
 	static App app;
 	private VoiceCapture vc;
+	private User bestMatch;
+	private JButton btnIncorrect, btnCorrect;
+	private JLabel lblMetrics;
 
 	/**
 	 * Create the frame.
@@ -75,8 +80,8 @@ public class LoginWindow extends JFrame implements ActionListener {
 		contentPane.add(lblPromptHead);
 
 		// dissable when editing LoginWindow GUI
-//		phraseGen = new PhraseGen();
-//		phrase = phraseGen.generatePhrase();
+		phraseGen = new PhraseGen();
+		phrase = phraseGen.generatePhrase();
 
 		lblPrompt = new JLabel(htmlTag1 + phrase + htmlTag2);
 		lblPrompt.setFont(new Font("Tahoma", Font.PLAIN, 22));
@@ -105,11 +110,25 @@ public class LoginWindow extends JFrame implements ActionListener {
 		btnContinue.setBounds(452, 338, 100, 30);
 		contentPane.add(btnContinue);
 		
+		btnCorrect = new JButton("Correct");
+		btnCorrect.setBounds(71, 599, 115, 29);
+		contentPane.add(btnCorrect);
+		
+		btnIncorrect = new JButton("Incorrect");
+		btnIncorrect.setBounds(198, 599, 115, 29);
+		contentPane.add(btnIncorrect);
+		
+		lblMetrics = new JLabel("Metrics");
+		lblMetrics.setBounds(161, 551, 69, 20);
+		contentPane.add(lblMetrics);
+		
 		btnNewPhrase.addActionListener(this);
 		btnRecord.addActionListener(this);
 		btnBack.addActionListener(this);
 		btnPlayback.addActionListener(this);
 		btnContinue.addActionListener(this);
+		btnCorrect.addActionListener(this);
+		btnIncorrect.addActionListener(this);
 
 	}
 
@@ -137,7 +156,7 @@ public class LoginWindow extends JFrame implements ActionListener {
 			
 			Identifer identifer = new Identifer(mfccs);
 			
-			User bestMatch = identifer.getBestMatch();
+			bestMatch = identifer.getBestMatch();
 			System.out.println("Best match: " + bestMatch.getName());
 			
 			
@@ -169,10 +188,29 @@ public class LoginWindow extends JFrame implements ActionListener {
 ////			
 ////			System.out.println("User 2: "+ Arrays.toString(gmm.compare(user2.getMFCCs())));
 		}
+		else if(e.getSource() == btnCorrect){
+			generateMetric(true);
+		}
+		else if(e.getSource() == btnIncorrect){
+			generateMetric(false);
+		}
 
 	}
 	
 	
+	private void generateMetric(boolean result) {
+		Metric metric = new Metric(bestMatch.getName(), bestMatch.getLikeihood(), phrase, result);
+		saveMetric(metric);
+	}
+
+	private void saveMetric(Metric metric) {
+		DBController dbcontroller = new DBController();
+		dbcontroller.connect();
+		MetricDAOImpl metricDAOImpl = new MetricDAOImpl(dbcontroller.getDatabase());
+		metricDAOImpl.save(metric);
+		System.out.println("metric saved");
+	}
+
 	private void checkSpokenPhrase() {
 		speechRecognition.transcriptUsingHTTP(file);
 		if(speechRecognition.isPhraseMatch(phrase)){

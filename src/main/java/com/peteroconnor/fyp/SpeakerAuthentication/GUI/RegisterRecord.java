@@ -35,7 +35,7 @@ public class RegisterRecord extends JFrame implements ActionListener{
 	private boolean isRecording = false;
 	private Playback playback;
 	private MFCC mfcc;
-	private String prompt = "the quick brown fox jumped over the lazy dog";
+	public static String prompt = "the quick brown fox jumped over the lazy dog";
 	private File file;
 	private SpeechRecognition speechRecognition;
 	private JLabel lblPhraseMatch;
