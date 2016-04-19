@@ -15,6 +15,7 @@ import com.peteroconnor.fyp.SpeakerAuthentication.DB.UserDAOImpl;
 import com.peteroconnor.fyp.SpeakerAuthentication.Entity.AudioData;
 import com.peteroconnor.fyp.SpeakerAuthentication.Entity.User;
 import com.peteroconnor.fyp.SpeakerAuthentication.FeatureExtraction.MFCC;
+import com.peteroconnor.fyp.SpeakerAuthentication.metrics.WavSaver;
 import com.peteroconnor.fyp.SpeakerAuthentication.speechRecognition.SpeechRecognition;
 
 import javax.swing.JButton;
@@ -170,10 +171,18 @@ public class RegisterRecord extends JFrame implements ActionListener{
 			user.setMFCCs(mfccs);
 			//uncomment to save
 			saveUser();
+			//saveFileToNewLocation
+			saveWavForTests();
 			app.setVisible(true);
 			this.dispose();
 			rw.dispose();
 		}
+		
+	}
+	
+	private void saveWavForTests() {
+		WavSaver wavSaver = new WavSaver();
+		wavSaver.renameAndSaveOriginalWavToNewLocation(user.getName());
 		
 	}
 

@@ -28,6 +28,20 @@ public class WavSaver {
 		
 	}
 	
+	public void renameAndSaveOriginalWavToNewLocation(String personName){
+		File folderToSaveIn = new File(FOLDER_NAME+"/original");
+		createFolder(folderToSaveIn);
+		File newFile = new File(FOLDER_NAME+"/original"+"/"+personName+".wav");
+		try {
+			FileUtils.copyFile(voiceFile, newFile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Wav saved for tests");
+	}
+	
+	
 	private void createFolder(File folder){
 		if(!folder.exists()){
 			try{

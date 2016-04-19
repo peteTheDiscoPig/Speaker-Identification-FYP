@@ -52,6 +52,11 @@
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.0.1</version>
+			</plugin>
 		</plugins>
 	</reporting>
 
@@ -167,6 +172,13 @@
 			<artifactId>jfreechart</artifactId>
 			<version>1.0.9</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.sonar</groupId>
+			<artifactId>sonar-maven-plugin</artifactId>
+			<version>5.1</version>
+		</dependency>
+
 
 	</dependencies>
 
