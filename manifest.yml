@@ -1,8 +1,6 @@
 ---
 applications:
-- name: Speaker-Identification-FYP-Jenkins
+- name: Speaker-Identification-FYP-Jenkins1
   memory: 512M
-  host: speaker-identification-fyp-jenkins
+  host: speaker-identification-fyp-jenkins1
   path: target/SpeakerAuthentication-0.0.1-SNAPSHOT.jar
-  env:
-    SPRING_PROFILES_DEFAULT: cloud
