@@ -10,6 +10,6 @@ public class RestTest {
 	@RequestMapping("/ASV/test")
 	public String sendMessage(){
 		
-		return "Hello World XXX";
+		return "This is proof the application is hosted - Peter O'Connor";
 	}
 }
