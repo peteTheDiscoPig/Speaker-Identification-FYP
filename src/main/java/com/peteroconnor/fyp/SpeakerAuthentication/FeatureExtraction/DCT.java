@@ -10,7 +10,7 @@ public class DCT {
 	//private FastCosineTransformer fct;
 	//private final DctNormalization NORMALISATION = DctNormalization.ORTHOGONAL_DCT_I;//.STANDARD_DCT_I;
 	//private final TransformType TRANSFORM_TYPE = TransformType.FORWARD;
-	public static final int NUMBER_OF_MFCC = 15;
+	public static final int NUMBER_OF_MFCC = 15;//15 was used
 	
 	
 	

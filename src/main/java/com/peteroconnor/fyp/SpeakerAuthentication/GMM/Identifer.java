@@ -54,7 +54,7 @@ public class Identifer {
 			double[] likeihoodArray = gmm.compare(mfccs);
 			//System.out.println(Arrays.toString(likeihoodArray));
 			double likeihood = DoubleStream.of(likeihoodArray).sum();
-			System.out.println(u.getName() + " " + likeihood);
+			System.out.println(u.getName() +": " +likeihood);
 			u.setLikeihood(likeihood);
 		}
 		User highestLikeihood = getHighestLikeihood(users);
