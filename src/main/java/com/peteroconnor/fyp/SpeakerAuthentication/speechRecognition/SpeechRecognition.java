@@ -15,8 +15,8 @@ import com.ibm.watson.developer_cloud.speech_to_text.v1.model.SpeechSession;
 public class SpeechRecognition {
 	
 	private final String HTTP_ENDPOINT = "https://stream.watsonplatform.net/speech-to-text/api";
-    private final String USERNAME = "ea4519f7-1b9d-4fa1-a7f8-8dba98c350f0"; 
-    private final String PASSWORD = "5dzeWzbTOMBq";
+    private final String USERNAME = "da04164d-1e1c-4dac-965f-77be2885d75a";//"ea4519f7-1b9d-4fa1-a7f8-8dba98c350f0"; 
+    private final String PASSWORD = "l3Eu5vIgJAD6";//"5dzeWzbTOMBq";
     private final String CONTENT_TYPE = "audio/wav";
     private SpeechResults transcript;
     private JSONObject json;
